@@ -14,7 +14,7 @@ await page.getByPlaceholder('first name').fill('hello');
 await page.getByPlaceholder('last name').fill('hello');
 await page.getByTestId('postalCode').fill('1234');
 await page.getByRole('button', { name: 'continue' }).click();
-await expect(page.getByTestId('total-label')).toContainText('10.79);
+await expect(page.getByTestId('total-label')).toContainText('10.79');
 await page.getByRole('button', { name: 'finish' }).click();
 await expect(page.getByText('Thank you for your order!')).toContainText('order');
 await expect(page.getByTestId('complete-text')).toBeVisible();
