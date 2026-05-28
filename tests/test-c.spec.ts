@@ -2,9 +2,9 @@
 import { test, expect } from '@playwright/test';
 test.describe('test c', () => {
   // Plus besoin de taper les identifiants, Playwright injecte la session automatiquement !
-  test.beforeEach(async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/inventory.html');
-  });
+test.beforeEach(async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/inventory.html');
+});
 
 
   // 2. Ajouter deux articles différents depuis le catalogue
