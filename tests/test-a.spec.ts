@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { login } from '../hooks/login';
+
 test.describe('test a', () => {
-test.beforeEach(async ({ page }) => {
-    await login(page);
+  
+  // Plus besoin de taper les identifiants, Playwright injecte la session automatiquement !
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/inventory.html');
+      
   });
   //
   test('test check', async ({ page }) => {
@@ -24,15 +27,6 @@ test.beforeEach(async ({ page }) => {
 
     //
     await expect(page.getByTestId('inventory-list')).toHaveCount(1);
-    //
-
-    //
-    //
-    //
-    //
-    //
-    //
-    
     await expect(page.getByAltText('Sauce Labs Bike Light')).toBeVisible();
     await expect(page.getByTestId('inventory-item-desc')).toHaveCount(6);
     await page.getByRole('button', { name: 'Open Menu' }).click();
