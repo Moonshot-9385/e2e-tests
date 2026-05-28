@@ -1,3 +1,4 @@
+
 import { test, expect } from '@playwright/test';
 test.describe('test a', () => {
   // Plus besoin de taper les identifiants, Playwright injecte la session automatiquement !
