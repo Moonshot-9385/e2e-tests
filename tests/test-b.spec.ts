@@ -27,6 +27,4 @@ await page.getByTestId('shopping-cart-link').click();
 await page.getByRole('button', { name: 'remove' }).click();
 await expect(page.getByTestId('cart_list')).toHaveCount();
 await page.getByRole('button', { name: 'continue shopping' }).click();
-await page.getByRole('button', { name: 'Open Menu' }).click();
-await page.getByRole('link', { name: 'logout' }).click();
 });
