@@ -19,7 +19,6 @@ test.describe('test a', () => {
     await expect(page.getByTestId('social-linkedin')).toBeVisible();
     await expect(page.getByTestId('social-facebook')).toBeVisible();
     await expect(page.getByTestId('social-twitter')).toBeVisible();
-
     await expect(page.getByTestId('inventory-list')).toHaveCount(1);
     await expect(page.getByAltText('Sauce Labs Bike Light')).toBeVisible();
     await expect(page.getByTestId('inventory-item-desc')).toHaveCount(6);
