@@ -23,7 +23,7 @@ test('customer', async ({ page }) => {
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save customer' }).click();
   await page.getByTestId('sidebar-customers').click();
-  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeEnabled
+  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeEnabled; 
 });
 
 test('cart', async ({ page }) => {
