@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   // Dossier des tests
-  testDir: './tests' ,
+testDir: './tests',
 
   // Parallélisme
   fullyParallel: true,

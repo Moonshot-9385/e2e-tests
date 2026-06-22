@@ -3,6 +3,7 @@ import { test as setup, expect } from '@playwright/test';
 import fs from 'fs'; // read write
 import path from 'path';  //chemin du fichier
 
+
 const login = 'playwright/.auth/user.json';  // chemin de sauvegarde
 
 setup('authentification', async ({ page }) => {
