@@ -24,7 +24,7 @@ export default defineConfig({
 
 
   projects: [
-    // Authentification..
+    // Authentification.......
     {
       name: 'setup', // nom donnée du projet 
       testMatch: /auth\.setup\.ts/, // nom du fichier 
