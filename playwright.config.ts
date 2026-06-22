@@ -1,9 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
-import path from 'path'; // lire ou creer un chemin
 
 export default defineConfig({
   // Dossier des tests
-  testDir: path.join(__dirname), // acceder au dossier parent 
+  testDir: './tests' ,
 
   // Parallélisme
   fullyParallel: true,
@@ -25,7 +24,7 @@ export default defineConfig({
 
 
   projects: [
-    // Authentification
+    // Authentification..
     {
       name: 'setup', // nom donnée du projet 
       testMatch: /auth\.setup\.ts/, // nom du fichier 
@@ -38,8 +37,9 @@ export default defineConfig({
     // Tests Chromium authentifiés
     {
       name: 'chromium',
-      dependencies: ['setup'], //execute de fichier setup puis les tests dans browser
-
+      dependencies: ['setup'], // execute auth setup before browser tests
+      testMatch: /.*\.spec\.ts$/,
+      testIgnore: /auth\.(setup|teardown)\.ts$/,
       use: {
         ...devices['Desktop Chrome'], // browser
         storageState: 'playwright/.auth/user.json', // les cookies du login qu'on recupere avant chaque test
