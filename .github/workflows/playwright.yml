@@ -1,16 +1,19 @@
-- name: Cache des navigateurs Playwright
+# 1. Récupération du cache des navigateurs Playwright
+    - name: Cache des navigateurs Playwright
       id: playwright-cache
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-chromium
+        key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }} # Utilise le hash du lockfile, c'est plus fiable
 
-    # Si Cache Miss : On installe le binaire Chromium et TOUTES ses dépendances système d'un coup
-    - name: Installation complète de Chromium
+    # 2. Installation des dépendances système (Ultra rapide via APT si besoin, ou géré proprement par Playwright)
+    # Si Cache Miss : On installe le navigateur ET les dépendances
+    - name: Installation complète de Playwright (Browser + Deps)
       if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps chromium
 
-    # Si Cache Hit : On installe UNIQUEMENT les dépendances système Linux manquantes (très rapide)
+    # Si Cache Hit : On installe UNIQUEMENT les dépendances système Linux (sans retélécharger Chromium)
+    # L'astuce : On utilise 'install-deps' seul, mais avec 'sudo' (car requis par apt-get en arrière-plan)
     - name: Installation des dépendances système uniquement
       if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx playwright install-deps chromium
+      run: sudo npx playwright install-deps chromium
