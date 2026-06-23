@@ -1,19 +1,36 @@
-# 1. Récupération du cache des navigateurs Playwright
-    - name: Cache des navigateurs Playwright
-      id: playwright-cache
-      uses: actions/cache@v4
+name: Run Playwright Tests Manually
+on:
+  workflow_dispatch:
+
+jobs:
+  playwright-e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.0-jammy
+    
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v4
+
+    - name: Configuration de Node.js
+      uses: actions/setup-node@v4
       with:
-        path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }} # Utilise le hash du lockfile, c'est plus fiable
+        node-version: 18
+        cache: 'npm'
 
-    # 2. Installation des dépendances système (Ultra rapide via APT si besoin, ou géré proprement par Playwright)
-    # Si Cache Miss : On installe le navigateur ET les dépendances
-    - name: Installation complète de Playwright (Browser + Deps)
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx playwright install --with-deps chromium
+    - name: Installation des dépendances
+      run: npm ci
 
-    # Si Cache Hit : On installe UNIQUEMENT les dépendances système Linux (sans retélécharger Chromium)
-    # L'astuce : On utilise 'install-deps' seul, mais avec 'sudo' (car requis par apt-get en arrière-plan)
-    - name: Installation des dépendances système uniquement
-      if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: sudo npx playwright install-deps chromium
+    - name: Exécution des tests Playwright
+      # 1. On force l'utilisation exclusive de Chromium
+      # 2. On indique le chemin spécifique de tes tests (ex: tests/)
+      run: npx playwright test tests/ --project=chromium
+
+    - name: Sauvegarde du rapport HTML
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
