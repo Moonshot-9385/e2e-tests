@@ -25,7 +25,7 @@ jobs:
       # ÉTAPE À AJOUTER : Installe les navigateurs de la version 1.61.0
       - run: npx playwright install --with-deps chromium
 
-      - run: npx playwright test tests/ --project=chromium
+      - run: npx playwright test test/ --project=chromium
 
       # Mise à jour de v4 à v5 pour l'upload d'artéfacts
       - uses: actions/upload-artifact@v5
