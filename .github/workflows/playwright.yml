@@ -1,0 +1,35 @@
+name: Run Playwright Tests Manually
+
+on:
+  workflow_dispatch: # Permet le déclenchement manuel via l'interface GitHub
+
+jobs:
+  playwright-e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v4
+
+    - name: Configuration de Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: Installation des dépendances
+      run: npm ci
+
+    - name: Installation des navigateurs Playwright
+      run: npx playwright install --with-deps
+
+    - name: Exécution des tests Playwright
+      run: npx playwright test
+
+    - name: Sauvegarde du rapport HTML
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
