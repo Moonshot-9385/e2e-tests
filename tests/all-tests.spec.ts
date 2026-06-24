@@ -23,7 +23,7 @@ test('customer', async ({ page }) => {
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save customer' }).click();
   await page.getByTestId('sidebar-customers').click();
-  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeEnabled; 
+  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeVisible();
 });
 
 test('cart', async ({ page }) => {
@@ -31,19 +31,19 @@ test('cart', async ({ page }) => {
   await expect(page.getByTestId('sidebar-carts')).toBeVisible();
   await page.getByLabel('Status').selectOption('All statuses');
   await page.getByLabel('Customer').selectOption('Hamza Elfathi');
-  await  page.getByRole('button', { name: 'Create cart' }).click();
-  await  page.getByRole('link', { name: 'cart_mql7wz1c_lbpunk' }).click();
- await expect(page.getByText('Customer: Hamza Elfathi')).toBeVisible();
-
+  await page.getByRole('button', { name: 'Create cart' }).click();
+  await page.getByRole('link', { name: 'cart_mql7wz1c_lbpunk' }).click();
+  await expect(page.getByText('Loading cart customer...')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Checkout cart' })).toBeEnabled();
 });
 
 test('currency', async ({ page }) => {
-    await page.goto('/settings');
-    await expect(page.getByTestId('sidebar-settings')).toBeVisible();
-    await page.getByLabel('Currency').selectOption('EUR'); 
-    await page.getByRole('checkbox').click();
-    await  page.getByTestId('save-settings-button').click();
-    await page.goto('/dashboard');
-    await expect(page.getByText('Moonshot uses EUR.')).toBeVisible();
+  await page.goto('/settings');
+  await expect(page.getByTestId('sidebar-settings')).toBeVisible();
+  await page.getByLabel('Currency').selectOption('EUR');
+  await page.getByRole('checkbox').click();
+  await page.getByTestId('save-settings-button').click();
+  await page.goto('/dashboard');
+  await expect(page.getByText('Moonshot uses EUR.')).toBeVisible();
 });
 

@@ -8,6 +8,7 @@ testDir: './tests',
   fullyParallel: true,
   workers: 4,
 
+
   // Sécurité CI
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 4 : 0,
