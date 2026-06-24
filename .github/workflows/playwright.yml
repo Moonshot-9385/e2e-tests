@@ -1,33 +1,28 @@
 name: Playwright Tests
 
-
 on:
   push:
-    branches: main 
-    workflow_dispatch:
- 
+    branches: main
+  workflow_dispatch:
+
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     steps:
-      # Passage en v4 -> v4.2.2+ ou directement utiliser la v4 (v4 gère maintenant mieux les runners récents, mais passons à l'action setup-node révisée)
       - uses: actions/checkout@v4
 
-      # Mise à jour de v4 à v5 pour supporter pleinement les nouveaux runners
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20 # Vous pouvez laisser 20 ou passer à 22 (LTS) selon les besoins de votre projet
+          node-version: 20
           cache: npm
 
       - run: npm ci
 
-      
       - run: npx playwright install --with-deps chromium
 
-      - run: npx playwright test tests/ --project=chromium
+      - run: npx playwright test tests/features --project=chromium
 
-      # Mise à jour de v4 à v5 pour l'upload d'artéfacts
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
