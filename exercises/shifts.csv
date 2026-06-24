@@ -1,7 +1,0 @@
-
-shiftId,date,zone,qcdScore,safetyIncidents,sortComplianceRate,pickingTimeMinutes,damagedPackages,rescheduledPackages,failedPackages,latePackages,customerReturns,repackSuccessRate,outputThroughput,costPerDelivery
-SHIFT-001,2026-05-01,Sort A,94,0,97.4,18,3,5,2,4,8,97,1200,4.20
-SHIFT-002,2026-05-01,Sort B,88,1,92.1,24,7,12,5,9,14,91,950,5.10
-SHIFT-003,2026-05-02,Repack,96,0,98.2,16,2,3,1,2,5,99,1300,3.90
-SHIFT-004,invalid-date,Sort C,101,0,99,15,1,2,1,3,3,97,1400,3.70
-SHIFT-005,2026-05-03,Sort A,85,-1,91,30,10,8,6,12,20,89,800,6.20
