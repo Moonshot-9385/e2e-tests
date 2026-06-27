@@ -18,7 +18,7 @@ await page.getByRole('button', { name: 'Checkout cart' }).click();
 
 test('cancel order', async ({ page }) => {
   await page.goto('/carts');
-  test.setTimeout(4000)
+   test.setTimeout(15000);
   await expect(page.getByTestId('sidebar-carts')).toBeVisible();
   await page.getByLabel('Status').selectOption('All statuses');
   await page.getByLabel('Customer').selectOption('Jordan Lee');

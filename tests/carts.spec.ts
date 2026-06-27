@@ -2,6 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test('add cart', async ({ page }) => {
+     test.setTimeout(15000);
   await page.goto('/carts');
   await expect(page.getByTestId('sidebar-carts')).toBeVisible();
   await page.getByLabel('Status').selectOption('All statuses');
