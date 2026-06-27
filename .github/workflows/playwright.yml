@@ -19,9 +19,12 @@ jobs:
       - run: npm ci
 
       - run: npx playwright install --with-deps chromium
+<<<<<<< HEAD
 
       # Exécute les tests. Si tu n'as pas configuré les 'retries' dans ton config file,
       # tu peux forcer 1 tentative de retry directement ici via la CLI (--retries=1)
+=======
+>>>>>>> git
       - run: npx playwright test tests --project=chromium --retries=1
 
       - uses: actions/upload-artifact@v4
