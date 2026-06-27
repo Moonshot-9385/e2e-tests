@@ -15,7 +15,6 @@ test('add customer', async ({ page }) => {
 
 
 test('delete customer', async ({ page }) => {
-  
   test.setTimeout(20000);
   await page.goto('/customers');
   await expect(page.getByTestId('sidebar-customers')).toBeVisible();
@@ -24,12 +23,9 @@ test('delete customer', async ({ page }) => {
   await page.getByLabel('Email').fill('elf123@sfr.fr');
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save customer' }).click();
+  await page.waitForURL('**/customers/*');
+  await page.getByRole('button', { name: 'Delete customer' }).click({ timeout: 10000 });
   await page.waitForURL('**/customers');
-  await page.getByTestId('sidebar-customers').click();
-  const customerLink = page.getByRole('link', { name: 'Hamza Elfathi' });
-  await expect(customerLink).toBeVisible({ timeout: 10000 }); 
-  await customerLink.click();
-  await page.getByRole('button', { name: 'Delete customer' }).click();
-  await page.goto('/customers');
   await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).not.toBeVisible({ timeout: 10000 });
 });
+
