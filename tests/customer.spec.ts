@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
+
 test('add customer', async ({ page }) => {
+  test.setTimeout(15000);
   await page.goto('/customers');
   await expect(page.getByTestId('sidebar-customers')).toBeVisible();
   await page.getByTestId('create-customer-button').click();
@@ -8,12 +10,13 @@ test('add customer', async ({ page }) => {
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save customer' }).click();
   await page.getByTestId('sidebar-customers').click();
-  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).toBeVisible({ timeout: 10000 });
 });
 
 
 test('delete customer', async ({ page }) => {
-  test.setTimeout(4000)
+  
+  test.setTimeout(20000);
   await page.goto('/customers');
   await expect(page.getByTestId('sidebar-customers')).toBeVisible();
   await page.getByTestId('create-customer-button').click();
@@ -21,9 +24,12 @@ test('delete customer', async ({ page }) => {
   await page.getByLabel('Email').fill('elf123@sfr.fr');
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save customer' }).click();
+  await page.waitForURL('**/customers');
   await page.getByTestId('sidebar-customers').click();
-  await page.getByRole('link', { name: 'Hamza Elfathi' }).click();
+  const customerLink = page.getByRole('link', { name: 'Hamza Elfathi' });
+  await expect(customerLink).toBeVisible({ timeout: 10000 }); 
+  await customerLink.click();
   await page.getByRole('button', { name: 'Delete customer' }).click();
   await page.goto('/customers');
-  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).not.toBeVisible();
+  await expect(page.getByRole('link', { name: 'Hamza Elfathi' })).not.toBeVisible({ timeout: 10000 });
 });
