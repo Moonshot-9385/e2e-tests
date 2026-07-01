@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('add customer', async ({ page }) => {
-  test.setTimeout(25000);
+  test.setTimeout(110);
   const uniqueEmail = `hamza.${Date.now()}@sfr.fr`;
   
   await page.goto('/customers');
