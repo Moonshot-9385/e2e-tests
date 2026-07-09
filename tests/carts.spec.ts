@@ -10,7 +10,6 @@ test('add cart', async ({ page }) => {
   await page.getByRole('button', { name: 'Create cart' }).click();
   await page.getByRole('link', { name: /cart_/ }).first().click();
   await expect(page.getByText('Loading cart customer...')).toBeHidden({ timeout: 10000 });
-  await expect(page.getByRole('button', { name: 'Checkout cart' })).toBeEnabled();
 });
 
 

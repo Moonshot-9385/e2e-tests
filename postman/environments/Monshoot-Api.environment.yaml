@@ -1,0 +1,6 @@
+name: Monshoot-Api
+values:
+  - key: url
+    value: ''
+  - key: token
+    value: ''

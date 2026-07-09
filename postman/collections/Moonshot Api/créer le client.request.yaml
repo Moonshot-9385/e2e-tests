@@ -1,0 +1,16 @@
+$kind: http-request
+url: https://moonshot-dashboard-test.vercel.app/api/customers
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "name": "lionel messi" ,
+      "email": "lionel@example.com" ,
+      "status": "active"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: ms_api_test_7d1f4a8c2e9b3f6d5a0c1e4b8f2a9d6c3b7e0a1f
+order: 1783445854858
