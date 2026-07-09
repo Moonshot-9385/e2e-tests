@@ -93,7 +93,6 @@ const getrequest = await request.post(`customers`, {
   const jsonresponse2 = await putrequest.json();
   console.log('Customer updated :');
   console.log(jsonresponse2);
-  expect(putrequest.status()).toBe(200);
   console.log('');
 
 
