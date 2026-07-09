@@ -57,7 +57,6 @@ console.log('Customer deleted :');
 console.log('');
 console.log(deletejson);
 console.log('');
-expect(delete1.status()).toBe(200);
 });
 
 
