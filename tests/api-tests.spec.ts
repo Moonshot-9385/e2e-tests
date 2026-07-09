@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test('lister les produits', async ({ request }) => {
-  test.setTimeout(14);
+  test.setTimeout(14000);
   const getrequest = await request.get('products');
   const jsonresponse = await getrequest.json();
   console.log(' Liste des produits : ');
