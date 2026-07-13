@@ -61,7 +61,9 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
-  
+   use: {
+        ...devices['Desktop Chrome'],
+      },
     },
 
 
