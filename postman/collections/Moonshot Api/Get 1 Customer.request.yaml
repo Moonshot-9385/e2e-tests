@@ -1,8 +1,13 @@
 $kind: http-request
-url: https://moonshot-dashboard-test.vercel.app/api/customers
+name: Get 1 Customer
+url: "{{url-api}}/customers/:id"
 method: GET
+pathVariables:
+  - key: id
+    value: cust_mrdkfeb9_ml0ps3
+    description: ""
 auth:
   type: bearer
   credentials:
-    token: ms_api_test_7d1f4a8c2e9b3f6d5a0c1e4b8f2a9d6c3b7e0a1f
+    token: "{{token-api}}"
 order: 1441436320307

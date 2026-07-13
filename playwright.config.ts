@@ -30,30 +30,48 @@ export default defineConfig({
 
  
   projects: [
-    // Authentification.......
+
+   //setup au debut
     {
-      name: 'setup', // nom donnée du projet 
-      testMatch: /auth\.setup\.ts/, // nom du fichier 
-    },// 
-    
-{
-      name: 'teardown',
-      testMatch: /auth\.teardown\.ts/,
+      name: 'setup',
+      testDir: './tests/UI',
+      testMatch: /auth\.setup\.ts/,
     },
-    // Tests Chromium authentifiés
+  
+
     {
-      name: 'chromium',
-      dependencies: ['setup'], // execute auth setup before browser tests
+      
+      name: 'ui-tests',
+      testDir: './tests/UI', // 
+      dependencies: ['setup'],
       testMatch: /.*\.spec\.ts$/,
-      testIgnore: /auth\.(setup|teardown)\.ts$/,
       use: {
-        ...devices['Desktop Chrome'], // browser
-        storageState: 'playwright/.auth/user.json', // les cookies du login qu'on recupere avant chaque test
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
       },
+
+
+
+
+
     },
 
-   
+  
+    {
+      name: 'api-tests',
+      testDir: './tests/API', 
+      testMatch: /.*\.spec\.ts$/,
+  
+    },
 
 
+    //teardown a la fin des tests 
+    {
+      name: 'teardown',
+      testDir: './tests/UI',
+      testMatch: /auth\.teardown\.ts/,
+      dependencies: ['ui-tests'],
+    },
   ],
+
 });
