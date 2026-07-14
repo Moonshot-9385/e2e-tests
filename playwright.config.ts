@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { chromium, defineConfig, devices } from '@playwright/test';
 
 const url = 'https://moonshot-dashboard-test.vercel.app/api/';
 const token1 = 'Bearer ms_api_test_7d1f4a8c2e9b3f6d5a0c1e4b8f2a9d6c3b7e0a1f';
@@ -30,6 +30,10 @@ export default defineConfig({
 
  
   projects: [
+
+
+
+
 
    //setup au debut
     {
