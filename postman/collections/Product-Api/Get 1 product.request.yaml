@@ -1,0 +1,14 @@
+$kind: http-request
+name: Get 1 product
+url: "{{url-api}}/products/:id"
+method: GET
+pathVariables:
+  - key: id
+    value: prod_mrm2pmie_9mzjri
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+examples: .resources/Get 1 product.resources/examples
+order: 1441436320307

@@ -1,6 +1,5 @@
 import {APIRequestContext, expect} from '@playwright/test';
-
-export async function createCustomer(request: APIRequestContext) {
+export async function createCustomerAPI(request: APIRequestContext) {
 
 const email = `lionel.${crypto.randomUUID()}@example.com`;
 const postrequest = await request.post(`customers`, { 

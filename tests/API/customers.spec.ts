@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { createCustomer } from '../../hooks/create-customer';
+import { createCustomerAPI } from '../../hooks/create-customer-api';
+
 
 
 let customerId: string;
@@ -7,7 +8,7 @@ let customerEmail: string;
 let customerStatus: string;
 
 test.beforeEach(async ({ request }) => {
-  const customerData = await createCustomer(request);
+  const customerData = await createCustomerAPI(request);
   customerId = customerData.data.id;
   customerEmail = customerData.data.email;
   customerStatus = customerData.data.status;
@@ -56,7 +57,7 @@ test('modify customer', async ({ request }) => {
     },
   });
   const jsonResponse = await putRequest.json();
-  expect(putRequest.ok()).toBeTruthy
+  expect(putRequest.ok()).toBeTruthy();
   expect(putRequest.status()).toBe(200);
   expect(jsonResponse.data.email).toBe(customerEmail);
 });

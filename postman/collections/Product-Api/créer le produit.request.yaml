@@ -1,0 +1,21 @@
+$kind: http-request
+name: créer le produit
+url: "{{url-api}}/products"
+method: POST
+body:
+  type: json
+  content: |2-
+     
+     {
+      "name": "QA Hoodie",
+      "description": "Internal test product",
+      "price": 59,
+      "category": "Apparel",
+      "stock": 12,
+      "status": "active"
+     }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 1783445854858

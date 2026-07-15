@@ -1,27 +1,22 @@
 
 import { test, expect } from '@playwright/test';
+import { createCartUI } from '../../hooks/create-cart-ui';
 
-test('add cart', async ({ page }) => {
-  test.setTimeout(15000);
-  await page.goto('/carts');
-  await expect(page.getByTestId('sidebar-carts')).toBeVisible();
-  await page.getByLabel('Status').selectOption('All statuses');
-  await page.getByLabel('Customer').selectOption('Jordan Lee');
-  await page.getByRole('button', { name: 'Create cart' }).click();
-  await page.getByRole('link', { name: /cart_/ }).first().click();
-  await expect(page.getByText('Loading cart customer...')).toBeHidden({ timeout: 10000 });
+test.beforeEach(async ({ page }) => {
+  await createCartUI(page);
+});
+
+test('modifier cart', async ({ page }) => {
+await expect(page.getByText('This cart is empty.')).toBeVisible();
+await page.getByLabel('Product').selectOption('USB-C Hub');
+ await page.getByRole('button', { name: 'Add item' }).click();
+ await page.getByRole('button', { name: 'Checkout cart' }).click();
+await expect(page.getByText('85.32')).toBeVisible();
 });
 
 
 
 test('abondon cart', async ({ page }) => {
-await page.goto('/carts');
-  await expect(page.getByTestId('sidebar-carts')).toBeVisible();
-  await page.getByLabel('Status').selectOption('All statuses');
-  await page.getByLabel('Customer').selectOption('Jordan Lee');
-  await page.getByRole('button', { name: 'Create cart' }).click();
-  await page.getByRole('link', { name: /cart_/ }).first().click();
-  await expect(page.getByText('Loading cart customer...')).toBeVisible();
  await page.getByRole('button', { name: 'Abandon cart' }).click();
 await expect(page.getByText('Cart abandoned.')).toBeVisible();
 

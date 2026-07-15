@@ -5,5 +5,5 @@ workspace:
 
 cloudResources:
   collections:
-    ../postman/collections/Moonshot Api: 56456168-018657d4-111b-4943-95f8-100dfcb54293
+    ../postman/collections/Customer-Api: 56456168-018657d4-111b-4943-95f8-100dfcb54293
   environments: {}

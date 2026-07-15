@@ -20,7 +20,7 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
       -  run: npx playwright test tests --project=api-tests --retries=1 --fail-on-flaky-tests
-       -  run: npx playwright test tests --project=ui-tests --retries=1 --fail-on-flaky-tests
+       - run: npx playwright test tests --project=ui-tests --retries=1 --fail-on-flaky-tests
 
       - uses: actions/upload-artifact@v4
         if: always() # Le rapport sera quand même généré et téléchargeable pour analyser le fail

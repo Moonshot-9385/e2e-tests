@@ -1,0 +1,15 @@
+$kind: http-request
+name: créer le cart
+url: "{{url-api}}/carts"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "customerId": "cust_mrkv695z_w2g4gu"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 1783445854858

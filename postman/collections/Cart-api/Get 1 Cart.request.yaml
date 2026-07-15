@@ -1,0 +1,14 @@
+$kind: http-request
+name: Get 1 Cart
+url: "{{url-api}}/carts/:id"
+method: GET
+pathVariables:
+  - key: id
+    value: cart_mrm257nx_32gr3v
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+examples: .resources/Get 1 Cart.resources/examples
+order: 1441436320307

@@ -1,0 +1,24 @@
+$kind: http-request
+name: changer le produit
+url: "{{url-api}}/products/:id"
+method: PUT
+pathVariables:
+  - key: id
+    value: prod_mrm2rrom_fqk1ch
+    description: ""
+body:
+  type: json
+  content: |2-
+     {
+      "name": "QA Hoodie",
+      "description": "Internal test product",
+      "price": 65,
+      "category": "Apparel",
+      "stock": 12,
+      "status": "active"
+     }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 415203243905241

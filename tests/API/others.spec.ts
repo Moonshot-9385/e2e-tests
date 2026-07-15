@@ -4,9 +4,6 @@ import { test, expect } from '@playwright/test';
 
 test('lister les produits', async ({ request }) => {
   const getrequest = await request.get('products');
-  const jsonresponse = await getrequest.json();
-  console.log(' Liste des produits : ');
-  console.log(jsonresponse);
   expect(getrequest.status()).toBe(200);
   expect(getrequest.ok()).toBeTruthy();
 });
@@ -15,14 +12,11 @@ test('lister les produits', async ({ request }) => {
 test('afficher keyboard', async ({ request }) => {
   const getrequest = await request.get('products/prod_keyboard');
   const jsonresponse = await getrequest.json();
-  console.log('jsonresponse.data.price is :');
-console.log(jsonresponse.data.price);
     expect(getrequest.status()).toBe(200);
     expect(getrequest.ok()).toBeTruthy();
     expect(jsonresponse.data.id).toBe('prod_keyboard');
     expect(jsonresponse.data.name).toBe('Mechanical Keyboard');
     expect(jsonresponse.data.price).toBe(150);
-  console.log('');
   
 });
 
@@ -73,8 +67,6 @@ test('Delete Mac13', async ({ request }) => {
   const ID = jsonresponse1.data.id;
   const deleterequest = await request.delete(`products/${ID}`, {
   });
- const deletejson = await deleterequest.json();
- console.log(deleterequest.status())
  expect(deleterequest.ok()).toBeTruthy();
   });
 

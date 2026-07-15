@@ -1,0 +1,23 @@
+$kind: http-request
+name: changer le cart
+url: "{{url-api}}/cart/:id"
+method: PUT
+pathVariables:
+  - key: id
+    value: cart_mrm3arav_0q1xmm
+    description: ""
+body:
+  type: json
+  content: |2-
+     {
+              "customerId": "cust_mrkv695z_w2g4gu",
+                "items": [
+                    
+                ],
+                "status": "pending"
+        }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 415203243905241
