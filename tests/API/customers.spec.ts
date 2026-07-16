@@ -37,9 +37,9 @@ test('get all customer', async ({ request }) => {
 
 test(' delete customer', async ({ request }) => {
   const deleteRequest = await request.delete(`customers/${customerId}`);
+    expect(deleteRequest.ok()).toBeTruthy();
   const getrequest = await request.get(`customers/${customerId}`);
   expect(getrequest.status()).toBe(404);
-  expect(deleteRequest.ok()).toBeTruthy();
 
 });
 
