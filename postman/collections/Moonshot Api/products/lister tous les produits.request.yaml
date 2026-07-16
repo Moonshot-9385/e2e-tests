@@ -1,0 +1,9 @@
+$kind: http-request
+name: lister tous les produits
+url: "{{url-api}}/products"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 265512047907

@@ -1,0 +1,18 @@
+$kind: http-request
+name: modify currency
+url: "{{url-api}}/settings"
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+      "storeName": "Moonshot Store",
+      "currency": "EUR",
+      "taxRate": 0.2,
+      "allowOutOfStockOrders": false
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 1784149404079

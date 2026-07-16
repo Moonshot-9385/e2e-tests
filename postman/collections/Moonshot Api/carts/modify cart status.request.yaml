@@ -1,0 +1,19 @@
+$kind: http-request
+name: modify cart status
+url: "{{url-api}}/carts/:id"
+method: PUT
+pathVariables:
+  - key: id
+    value: cart_mrmjnfxd_xu4sah
+    description: ""
+body:
+  type: json
+  content: |-
+    {
+      "status": "abandoned"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 2448710860251238

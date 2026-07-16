@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{url-api}}/products/:id"
+method: DELETE
+pathVariables:
+  id: prod_mrmj3de7_111ohk
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 3499802329878244

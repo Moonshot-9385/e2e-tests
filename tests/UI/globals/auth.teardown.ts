@@ -1,18 +1,23 @@
-// tests/auth.teardown.ts
 import { test as teardown } from '@playwright/test';
 import fs from 'fs';
 
-const login = 'playwright/.auth/user.json';  //le chemin qu'on veux
+const login = 'playwright/.auth/user.json'; 
 
 teardown('nettoyage', async ({ page }) => {
-  await page.goto('/dashboard');
+  const url = process.env.URL_MOONSHOT 
+  // Navigation vers l'URL
+  await page.goto(url);
+  
   const logoutButton = page.getByRole('button', { name: 'Logout' });
   
+  // Si le bouton de déconnexion est visible, on clique dessus
   if (await logoutButton.isVisible()) {
-    await logoutButton.click(); // cas normal
+    await logoutButton.click(); 
   }
-  if (fs.existsSync(login)) { //verifier la presence du storagestate
-    fs.unlinkSync(login); // vider le storage state
-    console.log(' Fichier user.json supprimé.');
+  
+  // Supprime le fichier d'authentification pour vider la session
+  if (fs.existsSync(login)) { 
+    fs.unlinkSync(login); 
+    console.log('Fichier user.json supprimé.');
   }
 });

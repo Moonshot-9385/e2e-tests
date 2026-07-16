@@ -1,0 +1,13 @@
+$kind: http-request
+name: delete order
+url: "{{url-api}}/orders/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: ord_mrmk9a6g_atkc4o
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 3166877939774096

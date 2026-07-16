@@ -1,0 +1,13 @@
+$kind: http-request
+name: delete cart
+url: "{{url-api}}/carts/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: cart_mrmjnfxd_xu4sah
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 3834055262031040

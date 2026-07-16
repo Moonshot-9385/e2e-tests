@@ -1,0 +1,22 @@
+$kind: http-request
+name: create order
+url: "{{url-api}}/orders"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "customerId": "cust_mrkv695z_w2g4gu",
+      "items": [
+            {
+          "productId": "prod_mrm2pmie_9mzjri",
+          "quantity": 3
+            }
+     
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 405098692178707

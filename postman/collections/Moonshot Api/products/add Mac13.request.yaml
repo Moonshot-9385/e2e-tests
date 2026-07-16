@@ -1,0 +1,21 @@
+$kind: http-request
+name: add Mac13
+url: "{{url-api}}/products"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "id": "Mac13",
+        "name": "Laptop MacBook Pro 13",
+        "description": "A powerful laptop for professionals.",
+        "price": 1520,
+        "category": "electronics",
+        "stock": 4,
+        "status": "active"
+        } 
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 1396561648968

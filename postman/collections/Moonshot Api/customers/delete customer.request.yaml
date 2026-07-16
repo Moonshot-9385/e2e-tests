@@ -1,0 +1,13 @@
+$kind: http-request
+name: delete customer
+url: "{{url-api}}/customers/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: cust_mrdtt7ew_eppupr
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 3944406072744220

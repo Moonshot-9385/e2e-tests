@@ -1,7 +1,7 @@
-import { chromium, defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
 
-const url = 'https://moonshot-dashboard-test.vercel.app/api/';
-const token1 = 'Bearer ms_api_test_7d1f4a8c2e9b3f6d5a0c1e4b8f2a9d6c3b7e0a1f';
+dotenv.config();
 
 export default defineConfig({
   // Dossier des tests
@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 2,
+  workers: 4,
 
 
   // Sécurité CI
@@ -22,9 +22,9 @@ export default defineConfig({
   //mes variables api
 
   use: {
-    baseURL: url,
+    baseURL: process.env.URL_API,
     extraHTTPHeaders: {
-      'Authorization': token1,
+      'Authorization': `Bearer ${process.env.API_TOKEN}`,
     },
   },
 
@@ -42,23 +42,27 @@ export default defineConfig({
       testMatch: /auth\.setup\.ts/,
     },
   
-
+      //teardown a la fin des tests 
     {
-      
+      name: 'teardown',
+      testDir: './tests/UI',
+      testMatch: /auth\.teardown\.ts/,
+    },
+
+  {
       name: 'ui-tests',
-      testDir: './tests/UI', // 
-      dependencies: ['setup'],
+      testDir: './tests/UI', 
+      dependencies: ['setup'], 
+      teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
+      testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
       },
-
-
-
-
-
     },
+
+
 
   
     {
@@ -70,14 +74,6 @@ export default defineConfig({
       },
     },
 
-
-    //teardown a la fin des tests 
-    {
-      name: 'teardown',
-      testDir: './tests/UI',
-      testMatch: /auth\.teardown\.ts/,
-      dependencies: ['ui-tests'],
-    },
   ],
 
 });

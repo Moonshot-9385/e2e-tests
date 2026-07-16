@@ -1,0 +1,22 @@
+$kind: http-request
+name: update le keyboard
+url: "{{url-api}}/products/:id"
+method: PUT
+pathVariables:
+  id: prod_keyboard
+body:
+  type: json
+  content: |-
+    {
+            "name": "Mechanical Keyboard",
+            "description": "A compact mechanical keyboard for desk setups.",
+            "price":180,
+            "category": "Accessories",
+            "stock": 10,
+            "status": "active"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 360075935670

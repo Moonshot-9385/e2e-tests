@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 
-test('mofifier product', async ({ page }) => {
+test('modifier product', async ({ page }) => {
 await page.getByLabel('Name').fill('Mac13Pro');
 await page.getByLabel('Price').fill('1400');
 await page.getByRole('button', { name: 'Save changes' }).click();

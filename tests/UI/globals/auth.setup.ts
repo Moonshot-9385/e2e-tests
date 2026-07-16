@@ -2,15 +2,19 @@
 import { test as setup, expect } from '@playwright/test';
 import fs from 'fs'; // read write
 import path from 'path';  //chemin du fichier
+import process from 'process';
 
 
 const login = 'playwright/.auth/user.json';  // chemin de sauvegarde
 
 setup('authentification', async ({ page }) => {
-  await page.goto('https://moonshot-dashboard-test.vercel.app/dashboard');
+  const email = process.env.USER_EMAIL;
+  const password = process.env.USER_PASSWORD;
+  const url = process.env.URL_MOONSHOT;
+  await page.goto(url);
 
-  await page.getByTestId('login-email').fill('test@moonshot-dashboard.com');
-  await page.getByTestId('login-password').fill('password');
+  await page.getByTestId('login-email').fill(email);
+  await page.getByTestId('login-password').fill(password);
   await page.getByRole('button', { name: 'sign in' }).click();
 
   await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible();

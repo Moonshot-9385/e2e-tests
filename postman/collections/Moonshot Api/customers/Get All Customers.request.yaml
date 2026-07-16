@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get All Customers
+url: "{{url-api}}/customers"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 44557687236

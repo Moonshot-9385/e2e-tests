@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{url-api}}/customers/:id"
+method: PUT
+pathVariables:
+  id: cust_mrdtt7ew_eppupr
+body:
+  type: json
+  content: |-
+    {
+        "name" : "lionel messi",
+      "email": "messi@example.com",
+      "status": "active"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 212323862355

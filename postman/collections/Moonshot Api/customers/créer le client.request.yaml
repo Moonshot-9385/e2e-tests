@@ -1,0 +1,17 @@
+$kind: http-request
+name: créer le client
+url: "{{url-api}}/customers"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "name": "lionel messi" ,
+      "email": "lionel@example.com" ,
+      "status": "active"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 211921120499

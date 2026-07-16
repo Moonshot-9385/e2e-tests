@@ -1,0 +1,16 @@
+$kind: http-request
+name: afficher le keyboard
+url: "{{url-api}}/products/:id?Price="
+method: GET
+queryParams:
+  - key: Price
+    value: ""
+    disabled: false
+    description: ""
+pathVariables:
+  id: prod_keyboard
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 288589779062

@@ -6,6 +6,8 @@ test('lister les produits', async ({ request }) => {
   const getrequest = await request.get('products');
   expect(getrequest.status()).toBe(200);
   expect(getrequest.ok()).toBeTruthy();
+  const jsonResponse = await getrequest.json();
+    expect(jsonResponse.data.length).toBeGreaterThan(0);
 });
 
 

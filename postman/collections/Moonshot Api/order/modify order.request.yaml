@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{url-api}}/orders/:id"
+method: PUT
+pathVariables:
+  id: ord_mrmk9a6g_atkc4o
+body:
+  type: json
+  content: |-
+    {
+      "status": "cancelled"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token-api}}"
+order: 666095040733552
