@@ -26,9 +26,9 @@ test('modify cart', async ({ request }) => {
 
 test('delete cart', async({request})=> {
 const deleterequest = await request.delete(`carts/${cartId}`)
+expect(deleterequest.ok()).toBeTruthy();
 const getrequest = await request.get(`carts/${cartId}`);
 expect(getrequest.status()).toBe(404);
-expect(deleterequest.ok()).toBeTruthy();
 });
 
 
