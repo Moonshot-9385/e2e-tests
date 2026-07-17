@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 3,
+  workers: 2,
 
 
   // Sécurité CI
@@ -65,15 +65,16 @@ export default defineConfig({
 
 
   
-    {
+{
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
-   use: {
-        ...devices['Desktop Chrome'],
+      workers: 2,
+      fullyParallel: false,
+      use: {
+   ...devices['Desktop Chrome'], 
       },
     },
-
   ],
 
 });
