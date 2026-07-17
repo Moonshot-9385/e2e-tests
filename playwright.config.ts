@@ -22,7 +22,7 @@ export default defineConfig({
   //mes variables api
 
   use: {
-    baseURL: process.env.URL_API,
+    baseURL: process.env.API_BASE_URL,
     extraHTTPHeaders: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`,
     },
