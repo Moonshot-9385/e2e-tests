@@ -9,7 +9,7 @@ on:
       suite:
         description: 'Select test suite'
         required: true
-        default: api
+        default: all
         type: choice
         options:
           - all
