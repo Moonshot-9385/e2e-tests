@@ -8,7 +8,7 @@ export async function createCartAPI(request: APIRequestContext) {
     }
   });
 
- // expect(createcart.ok()).toBe(201);
+ expect(createcart.status()).toBeTruthy();
   const jsonResponse = await createcart.json();
   expect(jsonResponse.data.customerId).toBe(customerid);
   return jsonResponse;

@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 2,
+  workers: 3,
 
 
   // Sécurité CI

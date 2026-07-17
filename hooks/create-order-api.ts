@@ -23,7 +23,7 @@ export async function createOrderAPI(request: APIRequestContext) {
   expect(createOrder.ok()).toBeTruthy();
   const jsonResponse = await createOrder.json();
   expect(jsonResponse.data.customerId).toBe(customerid);
-   //expect(jsonResponse.data.productId).toBe(productId);
-   // expect(jsonResponse.data.quantity).toBe(quantity);
+  //expect(jsonResponse.data.productId).toBe(productId);
+   //expect(jsonResponse.data.quantity).toBe(quantity);
   return jsonResponse;
 }

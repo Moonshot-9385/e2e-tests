@@ -17,7 +17,7 @@ test('modify cart', async ({ request }) => {
   "status": Status
     },
   });
-  //expect(putRequest.status()).toBe(200);
+  expect(putRequest.status()).toBe(200);
   const jsonResponse = await putRequest.json();
   expect(jsonResponse.data.status).toBe(Status);
 });
@@ -25,7 +25,7 @@ test('modify cart', async ({ request }) => {
 
 test('delete cart', async({request})=> {
 const deleterequest = await request.delete(`carts/${cartId}`)
-//expect(deleterequest.ok()).toBeTruthy();
+expect(deleterequest.status()).toBe(200);
 const getrequest = await request.get(`carts/${cartId}`);
 expect(getrequest.status()).toBe(404);
 });
