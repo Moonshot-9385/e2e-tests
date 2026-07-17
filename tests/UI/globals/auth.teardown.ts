@@ -4,7 +4,7 @@ import fs from 'fs';
 const login = 'playwright/.auth/user.json'; 
 
 teardown('nettoyage', async ({ page }) => {
-  const url = process.env.MOONSHOT_BASE_URL 
+  const url = process.env.APP_BASE_URL 
   // Navigation vers l'URL
   await page.goto(url);
   

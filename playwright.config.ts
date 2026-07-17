@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 2,
+  workers: 4,
 
 
   // Sécurité CI
@@ -22,7 +22,7 @@ export default defineConfig({
   //mes variables api
 
   use: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.APP_BASE_URL+"/api",
     extraHTTPHeaders: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`,
     },
@@ -57,7 +57,7 @@ export default defineConfig({
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
       workers: 2,
-      fullyParallel: false,
+      fullyParallel: true,
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
@@ -71,7 +71,7 @@ export default defineConfig({
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
       workers: 2,
-      fullyParallel: false,
+      fullyParallel: true,
       use: {
    ...devices['Desktop Chrome'], 
       },
