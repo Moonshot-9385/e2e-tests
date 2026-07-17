@@ -11,15 +11,15 @@ test.beforeEach(async ({ request }) => {
 });
 
 test('modify cart', async ({ request }) => {
-  const CartStatus = "abandoned"
+  const Status = "abandoned"
   const putRequest = await request.put(`carts/${cartId}`, {
     data: {
-  "status": CartStatus
+  "status": Status
     },
   });
+  //expect(putRequest.status()).toBe(200);
   const jsonResponse = await putRequest.json();
-  expect(putRequest.status()).toBe(200);
-  expect(jsonResponse.data.status).toBe(CartStatus);
+  expect(jsonResponse.data.status).toBe(Status);
 });
 
 

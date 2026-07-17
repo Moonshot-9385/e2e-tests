@@ -10,7 +10,7 @@ test.beforeEach(async ({ request }) => {
 
 });
 
-test('modify cart', async ({ request }) => {
+test('modifier order', async ({ request }) => {
   const OrderStatus = "cancelled"
   const putRequest = await request.put(`orders/${orderId}`, {
     data: {
@@ -18,7 +18,7 @@ test('modify cart', async ({ request }) => {
     },
   });
   const jsonResponse = await putRequest.json();
-  expect(putRequest.ok()).toBeTruthy();
+  //expect(putRequest.ok()).toBeTruthy();
   expect(putRequest.status()).toBe(200);
  expect(jsonResponse.data.status).toBe(OrderStatus);
 });
@@ -26,9 +26,9 @@ test('modify cart', async ({ request }) => {
 
 test('delete order', async({request})=> {
 const deleterequest = await request.delete(`orders/${orderId}`)
+expect(deleterequest.ok()).toBeTruthy();
 const getrequest = await request.get(`orders/${orderId}`);
 expect(getrequest.status()).toBe(404);
-expect(deleterequest.ok()).toBeTruthy();
 });
 
 

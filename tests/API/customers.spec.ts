@@ -37,7 +37,7 @@ test('get all customer', async ({ request }) => {
 
 test(' delete customer', async ({ request }) => {
   const deleteRequest = await request.delete(`customers/${customerId}`);
-    expect(deleteRequest.ok()).toBeTruthy();
+expect(deleteRequest.status()).toBe(200)
   const getrequest = await request.get(`customers/${customerId}`);
   expect(getrequest.status()).toBe(404);
 
@@ -57,9 +57,8 @@ test('modify customer', async ({ request }) => {
     },
   });
   const jsonResponse = await putRequest.json();
-  console.log(putRequest.status())
+  expect(jsonResponse.data.email).toBe(customerEmail);
   //expect(putRequest.ok()).toBeTruthy();
  // expect(putRequest.status()).toBe(200);
-  expect(jsonResponse.data.email).toBe(customerEmail);
 });
 

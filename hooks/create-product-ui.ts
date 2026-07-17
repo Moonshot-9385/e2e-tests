@@ -1,6 +1,6 @@
 import{expect}from'@playwright/test'
 export async function createProductUI(page){
-  await page.goto('/products');
+  await page.goto('products');
   await page.getByTestId('sidebar-products').click();
   await page.getByTestId('create-product-button').click();
   await page.getByLabel('Name').fill('Mac13');
