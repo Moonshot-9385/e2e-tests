@@ -49,19 +49,20 @@ export default defineConfig({
       testMatch: /auth\.teardown\.ts/,
     },
 
-  {
+{
       name: 'ui-tests',
       testDir: './tests/UI', 
       dependencies: ['setup'], 
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
+      workers: 2,
+      fullyParallel: false,
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
       },
     },
-
 
 
   
