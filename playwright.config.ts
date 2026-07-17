@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 
+
 dotenv.config();
 
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 4,
+  workers: 2,
 
 
   // Sécurité CI
@@ -22,7 +23,7 @@ export default defineConfig({
   //mes variables api
 
   use: {
-    baseURL: process.env.APP_BASE_URL+"/api",
+    baseURL: process.env.APP_BASE_URL+"/api/",
     extraHTTPHeaders: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`,
     },
