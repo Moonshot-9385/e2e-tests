@@ -1,20 +1,58 @@
-name: Playwright Tests
+name: E2E Tests
 
 on:
   push:
-    branches: main
+    branches:
+      - main
   workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Select test suite'
+        required: true
+        default: api
+        type: choice
+        options:
+          - all
+          - api
+          - ui
 
 jobs:
-  e2e-tests:
+  api-tests:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.suite == 'all' || inputs.suite == 'api' }}
     runs-on: ubuntu-latest
     
     env:
-      URL_API: ${{ secrets.URL_API }}
+      API_BASE_URL: ${{ vars.API_BASE_URL }}
       API_TOKEN: ${{ secrets.API_TOKEN }}
-      USER_EMAIL: ${{ secrets.EMAIL }}
-      USER_PASSWORD: ${{ secrets.PASSWORD }}
-      URL_MOONSHOT: ${{ secrets.MOONSHOT }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright test tests --project=api-tests --retries=1 --fail-on-flaky-tests
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-api
+          path: playwright-report/
+          retention-days: 30
+
+ 
+  ui-tests:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.suite == 'all' || inputs.suite == 'ui' }}
+    runs-on: ubuntu-latest
+    
+    env:
+      USER_EMAIL: ${{ secrets.USER_EMAIL }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      MOONSHOT_BASE_URL: ${{ vars.MOONSHOT_BASE_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +66,11 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
       
-      - run: npx playwright test tests --project=ui-tests --fail-on-flaky-tests
+      - run: npx playwright test tests --project=ui-tests --retries=1 --fail-on-flaky-tests
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-ui
           path: playwright-report/
           retention-days: 30
