@@ -1,8 +1,8 @@
 import{expect}from'@playwright/test'
 export async function createCustomerUI(page){
       const uniqueEmail = `hamza.${Date.now()}@sfr.fr`;
-      await page.goto('customers');
-      //await expect(page.getByTestId('sidebar-customers')).toBeVisible();
+      await page.goto('/customers');
+      await expect(page.getByTestId('sidebar-customers')).toBeVisible();
       await page.getByTestId('create-customer-button').click();
       await page.getByLabel('Name').fill('HElfathi');
       await page.getByLabel('Email').fill(uniqueEmail );

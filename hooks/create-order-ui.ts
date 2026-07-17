@@ -1,7 +1,7 @@
 
 import{expect}from'@playwright/test'
 export async function createOrderUI(page){
-  await page.goto('carts');
+  await page.goto('/carts');
   await expect(page.getByTestId('sidebar-carts')).toBeVisible();
   await page.getByLabel('Status').selectOption('All statuses');
   await page.getByLabel('Customer').selectOption('Jordan Lee');

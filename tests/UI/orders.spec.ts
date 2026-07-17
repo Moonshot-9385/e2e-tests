@@ -10,7 +10,7 @@ test('modifier order', async ({ page }) => {
     await page.getByLabel('Product').selectOption('Mechanical Keyboard');
     await page.getByRole('button', { name: 'Add item' }).click();
   await page.getByRole('button', { name: 'Checkout cart' }).click();
-  //await expect(page.getByRole('row', { name: 'Mechanical Keyboard 1 €150.00 €150.00' })).toBeVisible();
+  await expect(page.getByRole('row', { name: 'Mechanical Keyboard 1 €150.00 €150.00' })).toBeVisible();
 });
 
 
