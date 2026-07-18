@@ -48,17 +48,22 @@ expect(deleteRequest.status()).toBe(200)
 
 
 test('modify customer', async ({ request }) => {
+  const createdCustomer = await createCustomerAPI(request);
+  const createdCustomerId = createdCustomer.data.id;
   const customerEmail = `lionel.${Date.now()}@example.com`;
-  const putRequest = await request.put(`customers/${customerId}`, {
+
+  const putRequest = await request.put(`customers/${createdCustomerId}`, {
     data: {
       name: 'lionel messi',
       email: customerEmail,
       status: 'active',
     },
   });
+
+  expect(putRequest.status()).toBe(200);
+  expect(putRequest.ok()).toBeTruthy();
+
   const jsonResponse = await putRequest.json();
   expect(jsonResponse.data.email).toBe(customerEmail);
-  //expect(putRequest.ok()).toBeTruthy();
- // expect(putRequest.status()).toBe(200);
 });
 
