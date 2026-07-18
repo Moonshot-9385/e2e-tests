@@ -10,4 +10,5 @@ export async function createProductUI(page){
   await page.getByLabel('Category').fill('electronique');
   await page.getByLabel('Status').selectOption('Active');
   await page.getByRole('button', { name: 'Save product' }).click();
-  await expect(page.getByText('Created')).toBeVisible();
+ await expect(page.getByText('Created')).toBeVisible();
+}

@@ -10,7 +10,7 @@ export default defineConfig({
 
   // Parallélisme
   fullyParallel: true,
-  workers: 2,
+  workers: 3,
 
 
   // Sécurité CI
@@ -57,7 +57,7 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 2,
+      workers: 3,
       fullyParallel: true,
       use: {
         ...devices['Desktop Chrome'],
@@ -71,7 +71,7 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
-      workers: 2,
+      workers: 3,
       fullyParallel: true,
       use: {
    ...devices['Desktop Chrome'], 
