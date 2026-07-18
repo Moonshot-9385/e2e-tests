@@ -4,7 +4,7 @@ import { createOrderAPI } from '../../hooks/create-order-api';
 let orderId: string;
 
 
-test.beforeEach(async ({ request }) => {
+test.beforeAll(async ({ request }) => {
   const OrderData = await createOrderAPI(request);
   orderId = OrderData.data.id;
 

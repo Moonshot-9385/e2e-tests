@@ -7,7 +7,7 @@ let customerId: string;
 let customerEmail: string;
 let customerStatus: string;
 
-test.beforeEach(async ({ request }) => {
+test.beforeAll(async ({ request }) => {
   const customerData = await createCustomerAPI(request);
   customerId = customerData.data.id;
   customerEmail = customerData.data.email;

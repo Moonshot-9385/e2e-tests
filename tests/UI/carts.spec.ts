@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 import { createCartUI } from '../../hooks/create-cart-ui';
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async({ page }) => {
   await createCartUI(page);
 });
 

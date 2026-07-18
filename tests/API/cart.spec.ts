@@ -4,10 +4,9 @@ import { createCartAPI } from '../../hooks/create-cart-api';
 let cartId: string;
 
 
-test.beforeEach(async ({ request }) => {
+test.beforeAll(async ({ request }) => {
   const cartData = await createCartAPI(request);
   cartId = cartData.data.id;
-
 });
 
 test('modify cart', async ({ request }) => {
