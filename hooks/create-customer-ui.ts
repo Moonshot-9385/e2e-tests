@@ -9,7 +9,7 @@ export async function createCustomerUI(page){
       await page.getByLabel('Status').selectOption('Active');
       await page.getByRole('button', { name: 'Save customer' }).click();
       await expect(page.getByRole('button', { name: 'Delete customer' })).toBeVisible();
-
+return { email: uniqueEmail };
 
     }
 
