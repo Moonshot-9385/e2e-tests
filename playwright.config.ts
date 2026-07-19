@@ -1,8 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // Charge les variables d'environnement
 dotenv.config();
+
+// Résolution du chemin absolu à la racine du projet (compatible ES Modules)
+const STORAGE_STATE_PATH = path.resolve('.auth/user.json');
 
 export default defineConfig({
   // Dossier racine des tests
@@ -10,21 +14,19 @@ export default defineConfig({
 
   // Configuration du parallélisme
   fullyParallel: true,
+  
+  // 1 seul worker en CI pour éviter les conflits d'accès au fichier user.json
   workers: process.env.CI ? 1 : 2,
 
   // Sécurité et résilience
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 1, // 
+  retries: process.env.CI ? 2 : 1, 
+  
   // Génération des rapports
   reporter: 'html',
 
-  // Configuration globale (API par défaut)
+  // Configuration globale (Traces et captures d'écran)
   use: {
-    baseURL: `${process.env.APP_BASE_URL}/api/`,
-    extraHTTPHeaders: {
-      'Authorization': `Bearer ${process.env.API_TOKEN}`,
-    },
-    // Ajout de la gestion automatique des traces et captures en cas d'échec
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -38,6 +40,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
+        baseURL: process.env.APP_BASE_URL,
       },
     },
   
@@ -49,10 +52,11 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
+        baseURL: process.env.APP_BASE_URL,
       },
     },
 
-    // 3. Les Tests UI (Dépendent du setup et appellent le teardown à la fin)
+    // 3. Les Tests UI (Dépendent du setup et utilisent le stockage absolu)
     {
       name: 'ui-tests',
       testDir: './tests/UI', 
@@ -63,20 +67,23 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        storageState: 'playwright/.auth/user.json',
+        baseURL: process.env.APP_BASE_URL, // Interface utilisateur Web
+        storageState: STORAGE_STATE_PATH,
       },
     },
 
-    // 4. Les Tests API (Indépendants de l'UI et du stockage d'authentification)
+    // 4. Les Tests API (Indépendants de l'UI)
     {
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
       use: {
-        // Pour de l'API pure, pas besoin de charger l'émulation d'un navigateur complet, 
-        // mais si tu as besoin de jetons de session contextuels, on garde la base Chrome.
         ...devices['Desktop Chrome'], 
-         channel: 'chrome',
+        channel: 'chrome',
+        baseURL: `${process.env.APP_BASE_URL}/api/`, // Endpoint spécifique de l'API
+        extraHTTPHeaders: {
+          'Authorization': `Bearer ${process.env.API_TOKEN}`,
+        },
       },
     },
   ],
