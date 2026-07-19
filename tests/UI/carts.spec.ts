@@ -11,7 +11,7 @@ await expect(page.getByText('This cart is empty.')).toBeVisible();
 await page.getByLabel('Product').selectOption('USB-C Hub');
  await page.getByRole('button', { name: 'Add item' }).click();
  await page.getByRole('button', { name: 'Checkout cart' }).click();
-//await expect(page.getByText('79.00')).toBeVisible();
+//await expect(page.getByText('USB-C Hub')).toBeVisible();
 });
 
 

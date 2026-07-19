@@ -57,8 +57,6 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 3,
-      fullyParallel: true,
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
@@ -71,8 +69,6 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
-      workers: 1,
-      fullyParallel: true,
       use: {
    ...devices['Desktop Chrome'], 
       },
