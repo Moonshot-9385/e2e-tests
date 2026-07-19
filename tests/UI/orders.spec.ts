@@ -13,7 +13,6 @@ test('modifier order', async ({ page }) => {
     await expect(page.getByText('Item added.')).toBeVisible();
 });
 
-t add
 
 test('cancel order', async ({ page }) => {
   await page.getByRole('button', { name: 'Checkout cart' }).click();
