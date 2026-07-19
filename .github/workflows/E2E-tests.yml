@@ -65,7 +65,7 @@ jobs:
 
       - run: npm ci
       
-      - run: npx playwright test tests --project=ui-tests --workers=4 --retries=1 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
+      - run: npx playwright test tests --project=ui-tests --workers=2 --retries=1 --timeout=30000 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
 
       - uses: actions/upload-artifact@v4
         if: always()

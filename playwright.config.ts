@@ -9,14 +9,12 @@ export default defineConfig({
   testDir: './tests',
 
   // Configuration du parallélisme
-  fullyParallel: false,
-  // 4 workers en local pour aller vite, 1 seul en CI pour éviter les surcharges de mémoire et la corruption de fichiers
-  workers: process.env.CI ? 1 : 4,
+  fullyParallel: true,
+  workers: process.env.CI ? 1 : 2,
 
   // Sécurité et résilience
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 4 : 1, // En local, 1 retry aide à stabiliser les faux négatifs de connexion
-
+  retries: process.env.CI ? 2 : 1, // 
   // Génération des rapports
   reporter: 'html',
 
