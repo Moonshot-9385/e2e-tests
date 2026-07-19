@@ -64,7 +64,7 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 3,
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
