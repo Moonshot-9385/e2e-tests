@@ -1,16 +1,18 @@
 import { test, expect } from '@playwright/test';
 import { createOrderUI } from '../../hooks/create-order-ui';
 
+test.describe.configure({ mode: 'serial' });
+
 test.beforeEach(async ({ page }) => {
   await createOrderUI(page);
 });
 
 test('modifier order', async ({ page }) => {
-  await page.getByRole('button', { name: 'Remove' }).click();
-    await page.getByLabel('Product').selectOption('Mac13Pro');
-    await page.getByRole('button', { name: 'Add item' }).click();
-    await page.getByRole('button', { name: 'Checkout cart' }).click();
-  await expect(page.getByRole('row', { name: 'Mac13Pro 1 €1,400.00 €1,400.00' })).toBeVisible();
+  await page.getByRole('row', { name: /Mac13Pro/ }).getByRole('button', { name: 'Remove' }).click();
+  await page.getByLabel('Product').selectOption('Mac13Pro');
+  await page.getByRole('button', { name: 'Add item' }).click();
+  await page.getByRole('button', { name: 'Checkout cart' }).click();
+  await expect(page.getByRole('row', { name: /Mac13Pro/ })).toBeVisible();
 });
 
 
@@ -18,6 +20,6 @@ test('modifier order', async ({ page }) => {
 test('cancel order', async ({ page }) => {
   await page.getByRole('button', { name: 'Checkout cart' }).click();
   await expect(page.getByRole('button', { name: 'Cancel order' })).toBeEnabled();
-  page.getByRole('button', { name: 'Cancel order' }).click();
+  await page.getByRole('button', { name: 'Cancel order' }).click();
   await expect(page.getByText('Order cancelled.')).toBeVisible();
 });

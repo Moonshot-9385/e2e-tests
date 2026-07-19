@@ -9,8 +9,8 @@ export default defineConfig({
   testDir: './tests',
 
   // Parallélisme
-  fullyParallel: true,
-  workers: 4,
+fullyParallel: false,
+workers: process.env.CI ? 1 : 4,
 
 
   // Sécurité CI

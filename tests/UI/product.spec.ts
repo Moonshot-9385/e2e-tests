@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { createProductUI } from '../../hooks/create-product-ui';
 
+test.describe.configure({ mode: 'serial' });
+
 test.beforeEach(async ({ page }) => {
   await createProductUI(page);
 });
