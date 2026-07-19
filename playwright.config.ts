@@ -16,7 +16,7 @@ export default defineConfig({
   fullyParallel: true,
   
   // 1 seul worker en CI pour éviter les conflits d'accès au fichier user.json
-  workers: process.env.CI ? 1 : 2,
+  workers: process.env.CI ? 1 : 3,
 
   // Sécurité et résilience
   forbidOnly: !!process.env.CI,
@@ -64,7 +64,7 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 1,
+      workers: 3,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
