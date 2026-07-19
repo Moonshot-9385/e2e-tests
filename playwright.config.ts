@@ -64,7 +64,7 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 2,
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
@@ -78,7 +78,7 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
-      workers: 2,
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
