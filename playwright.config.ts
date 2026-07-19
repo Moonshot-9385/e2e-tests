@@ -56,6 +56,7 @@ export default defineConfig({
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
       use: {
         ...devices['Desktop Chrome'],
+        channel: 'chrome',
         storageState: 'playwright/.auth/user.json',
       },
     },
@@ -69,6 +70,7 @@ export default defineConfig({
         // Pour de l'API pure, pas besoin de charger l'émulation d'un navigateur complet, 
         // mais si tu as besoin de jetons de session contextuels, on garde la base Chrome.
         ...devices['Desktop Chrome'], 
+         channel: 'chrome',
       },
     },
   ],
