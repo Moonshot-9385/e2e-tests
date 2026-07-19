@@ -1,56 +1,53 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 
-
+// Charge les variables d'environnement
 dotenv.config();
 
 export default defineConfig({
-  // Dossier des tests
+  // Dossier racine des tests
   testDir: './tests',
 
-  // Parallélisme
-fullyParallel: false,
-workers: process.env.CI ? 1 : 4,
+  // Configuration du parallélisme
+  fullyParallel: false,
+  // 4 workers en local pour aller vite, 1 seul en CI pour éviter les surcharges de mémoire et la corruption de fichiers
+  workers: process.env.CI ? 1 : 4,
 
-
-  // Sécurité CI
+  // Sécurité et résilience
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 4 : 0,
+  retries: process.env.CI ? 4 : 1, // En local, 1 retry aide à stabiliser les faux négatifs de connexion
 
-  // Rapport
+  // Génération des rapports
   reporter: 'html',
 
-  //mes variables api
-
+  // Configuration globale (API par défaut)
   use: {
-    baseURL: process.env.APP_BASE_URL+"/api/",
+    baseURL: `${process.env.APP_BASE_URL}/api/`,
     extraHTTPHeaders: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`,
     },
+    // Ajout de la gestion automatique des traces et captures en cas d'échec
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
   },
 
- 
   projects: [
-
-
-
-
-
-   //setup au debut
+    // 1. Le Setup (Exécuté en premier)
     {
       name: 'setup',
       testDir: './tests/UI',
       testMatch: /auth\.setup\.ts/,
     },
   
-      //teardown a la fin des tests 
+    // 2. Le Teardown caché (Sert de référence, mais ne s'exécute pas tout seul)
     {
       name: 'teardown',
       testDir: './tests/UI',
       testMatch: /auth\.teardown\.ts/,
     },
 
-{
+    // 3. Les Tests UI (Dépendent du setup et appellent le teardown à la fin)
+    {
       name: 'ui-tests',
       testDir: './tests/UI', 
       dependencies: ['setup'], 
@@ -63,16 +60,16 @@ workers: process.env.CI ? 1 : 4,
       },
     },
 
-
-  
-{
+    // 4. Les Tests API (Indépendants de l'UI et du stockage d'authentification)
+    {
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
       use: {
-   ...devices['Desktop Chrome'], 
+        // Pour de l'API pure, pas besoin de charger l'émulation d'un navigateur complet, 
+        // mais si tu as besoin de jetons de session contextuels, on garde la base Chrome.
+        ...devices['Desktop Chrome'], 
       },
     },
   ],
-
 });

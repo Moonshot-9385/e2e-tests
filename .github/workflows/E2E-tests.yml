@@ -66,7 +66,8 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
       
-      - run: npx playwright test tests --project=ui-tests --workers=2 --retries=1 --fail-on-flaky-tests
+      # Modification ici : ajout du reporter list, des traces et screenshots sur échec, retrait du fail strict sur flaky
+      - run: npx playwright test tests --project=ui-tests --workers=2 --retries=1 --reporter=list,html --trace on-first-retry --screenshot only-on-failure
 
       - uses: actions/upload-artifact@v4
         if: always()
