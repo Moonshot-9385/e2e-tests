@@ -64,6 +64,7 @@ export default defineConfig({
       teardown: 'teardown',  
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
@@ -77,10 +78,11 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/API', 
       testMatch: /.*\.spec\.ts$/,
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: `${process.env.APP_BASE_URL}/api/`, // Endpoint spécifique de l'API
+        baseURL: `${process.env.APP_BASE_URL}/api/`, 
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
