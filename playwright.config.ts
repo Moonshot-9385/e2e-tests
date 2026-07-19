@@ -37,13 +37,21 @@ export default defineConfig({
       name: 'setup',
       testDir: './tests/UI',
       testMatch: /auth\.setup\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome', 
+      },
     },
   
-    // 2. Le Teardown caché (Sert de référence, mais ne s'exécute pas tout seul)
+    // 2. Le Teardown 
     {
       name: 'teardown',
       testDir: './tests/UI',
       testMatch: /auth\.teardown\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome', 
+      },
     },
 
     // 3. Les Tests UI (Dépendent du setup et appellent le teardown à la fin)
