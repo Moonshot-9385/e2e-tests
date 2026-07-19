@@ -64,9 +64,13 @@ jobs:
 
       - run: npm ci
 
-      - run: npx playwright install --with-deps chromium
-      
-      - run: npx playwright test tests --project=ui-tests  --fail-on-flaky-tests
+      # Correction du blocage : On installe le browser, puis les deps Linux de manière non-interactive
+      - name: Install Playwright Browser & Linux Deps
+        run: |
+          npx playwright install chromium
+          sudo npx playwright install-deps chromium --yes
+
+      - run: npx playwright test tests --project=ui-tests --fail-on-flaky-tests
 
       - uses: actions/upload-artifact@v4
         if: always()
