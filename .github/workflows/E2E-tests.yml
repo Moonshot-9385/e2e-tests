@@ -54,7 +54,7 @@ jobs:
       USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
       APP_BASE_URL: ${{ vars.APP_BASE_URL }}
 
-   steps:
+    steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -64,12 +64,7 @@ jobs:
 
       - run: npm ci
       
-      # AJOUT INDISPENSABLE : Installe les runtimes et dépendances pour l'option channel: 'chrome'
-      - name: Install Playwright Browsers & Dependencies
-        run: npx playwright install chrome --with-deps
-      
-      # AJUSTEMENTS : Passage à 1 worker pour isoler le bug et timeout à 30s
-      - run: npx playwright test tests --project=ui-tests --workers=1 --retries=1 --timeout=30000 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
+      - run: npx playwright test tests --project=ui-tests --workers=2 --retries=1 --timeout=30000 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
 
       - uses: actions/upload-artifact@v4
         if: always()
