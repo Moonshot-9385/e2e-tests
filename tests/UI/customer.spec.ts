@@ -6,11 +6,13 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('modifier customer', async ({ page }) => {
+  const email = 'hamza.${crypto.randomUUID(()}@gmail.com'
   await page.goto('/customers');
-  await page.getByRole('link', { name: 'HElfathi' }).first().click();
-  await page.getByLabel('Name').fill('Hamza');
+  await page.getByRole('link', { name: 'Hamza Elfathi' }).first().click();
+  await page.getByLabel('Name').fill('Hamza Elfathi');
+    await page.getByLabel('Email').fill(email);
   await page.getByRole('button', { name: 'save changes' }).click();
- //await expect(page.getByRole('heading', { name: 'Hamza' })).toBeVisible();
+ await expect(page.getByRole('heading', { name: 'Hamza' })).toBeVisible();
   });
 
 

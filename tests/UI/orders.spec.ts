@@ -7,10 +7,10 @@ test.beforeEach(async ({ page }) => {
 
 test('modifier order', async ({ page }) => {
   await page.getByRole('button', { name: 'Remove' }).click();
-    await page.getByLabel('Product').selectOption('Mechanical Keyboard');
+    await page.getByLabel('Product').selectOption('Mac13Pro');
     await page.getByRole('button', { name: 'Add item' }).click();
-  await page.getByRole('button', { name: 'Checkout cart' }).click();
-  await expect(page.getByRole('row', { name: 'Mechanical Keyboard 1 €150.00 €150.00' })).toBeVisible();
+    await page.getByRole('button', { name: 'Checkout cart' }).click();
+  await expect(page.getByRole('row', { name: 'Mac13Pro 1 €1,400.00 €1,400.00' })).toBeVisible();
 });
 
 
