@@ -67,7 +67,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       
       
-      - run: npx playwright test tests --project=ui-tests --workers=2 --retries=1 --reporter=list,html --trace on-first-retry
+      - run: npx playwright test tests --project=ui-tests --workers=1 --retries=1 --reporter=list,html --trace on-first-retry
 
       - uses: actions/upload-artifact@v4
         if: always()
