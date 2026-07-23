@@ -82,7 +82,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: `${process.env.APP_BASE_URL}//api-docs#tag/`, // Aligné sur l'URL de base pour correspondre à vos requêtes
+        baseURL: `${process.env.APP_BASE_URL}//api/`, // Aligné sur l'URL de base pour correspondre à vos requêtes
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
