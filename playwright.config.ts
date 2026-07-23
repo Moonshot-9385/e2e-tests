@@ -57,14 +57,13 @@ export default defineConfig({
     },
 
     // 3. Les Tests UI (Dépendent du setup et utilisent le stockage absolu)
-    {
+ {
       name: 'ui-tests',
       testDir: './tests/UI', 
-      dependencies: ['setup'], 
-      teardown: 'teardown',  
+      dependencies: ['setup'], // C'est correct ici pour attendre le setup
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 1,
+      workers: 3,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
@@ -82,7 +81,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: `${process.env.APP_BASE_URL}//api/`, // Aligné sur l'URL de base pour correspondre à vos requêtes
+        baseURL: `${process.env.APP_BASE_URL}/api/`, // Aligné sur l'URL de base pour correspondre à vos requêtes
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
