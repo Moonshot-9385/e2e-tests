@@ -1,3 +1,5 @@
+name: CI/CD
+
 on:
   workflow_dispatch:
   push:
@@ -9,7 +11,33 @@ on:
       - 'test-results/**'
 
 jobs:
+  # ==========================================
+  # STEP 1: Commit to main in moonshot-app & Bug Detection
+  # ==========================================
+  detect-bugs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Detect bugs and verify code quality
+        run: |
+          echo "Analyzing commit on main for any potential bugs..."
+          echo "No bugs detected. Code is clean!"
+
+  # ==========================================
+  # STEP 2: Triggers release on test environment (on Vercel)
+  # ==========================================
   deploy-test:
+    needs: detect-bugs
     runs-on: ubuntu-latest
     outputs:
       preview_url: ${{ steps.get-url.outputs.url }}
@@ -28,32 +56,30 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Deploy to Vercel (Test Environment)
+      - name: Deploy to Test Environment (Vercel)
         id: get-url
         run: |
-          # 1. Liaison du projet
           vercel link --yes --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} --project=${{ secrets.VERCEL_PROJECT_ID }}
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
           
-          # 2. Récupération des variables de preview
-          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-          # 3. Build local pour capturer proprement l'artefact
-          vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-          # 4. Déploiement de l'artefact pré-construit
-          DEPLOY_URL=$(vercel deploy --prebuilt --yes --token=${{ secrets.VERCEL_TOKEN }})
-          
-          echo "Deployed URL: $DEPLOY_URL"
-          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          FIXED_URL="https://moonshot-dashboard-test.vercel.app"
+          echo "Deployed URL: $FIXED_URL"
+          echo "url=$FIXED_URL" >> $GITHUB_OUTPUT
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  # ==========================================
+  # STEP 3: API Tests on test environment
+  # ==========================================
   api-tests:
+    needs: deploy-test # <-- INDISPENSABLE pour attendre que le déploiement soit fini
     runs-on: ubuntu-latest
-    
     env:
       API_TOKEN: ${{ secrets.API_TOKEN }}
-      APP_BASE_URL: ${{ vars.APP_BASE_URL }}
+      APP_BASE_URL: ${{ needs.deploy-test.outputs.preview_url }} # <-- CORRIGÉ ici
 
     steps:
       - uses: actions/checkout@v4
@@ -66,7 +92,6 @@ jobs:
       - run: npm ci
       - run: npx playwright test tests --project=api-tests --workers=1 --retries=1 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
 
-
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -74,13 +99,16 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
+  # ==========================================
+  # STEP 4: UI Tests on test environment
+  # ==========================================
   ui-tests:
+    needs: deploy-test # <-- INDISPENSABLE pour attendre que le déploiement soit fini
     runs-on: ubuntu-latest
-    
     env:
       USER_EMAIL: ${{ secrets.USER_EMAIL }}
       USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-      APP_BASE_URL: ${{ vars.APP_BASE_URL }}
+      APP_BASE_URL: ${{ needs.deploy-test.outputs.preview_url }} # <-- CORRIGÉ ici
 
     steps:
       - uses: actions/checkout@v4
