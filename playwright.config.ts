@@ -5,8 +5,6 @@ import path from 'path';
 // Charge les variables d'environnement
 dotenv.config();
 
-const appBaseUrl = process.env.APP_BASE_URL || 'https://moonshot-dashboard-test.vercel.app';
-
 // Résolution du chemin absolu à la racine du projet (compatible ES Modules)
 const STORAGE_STATE_PATH = path.resolve('.auth/user.json');
 
@@ -42,7 +40,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
-        baseURL: appBaseUrl,
+        baseURL: process.env.APP_BASE_URL,
       },
     },
   
@@ -54,7 +52,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
-        baseURL: appBaseUrl,
+        baseURL: process.env.APP_BASE_URL,
       },
     },
 
@@ -70,7 +68,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        baseURL: appBaseUrl, 
+        baseURL: process.env.APP_BASE_URL, 
         storageState: STORAGE_STATE_PATH,
       },
     },
@@ -84,7 +82,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: appBaseUrl, // Aligné sur l'URL de base pour correspondre à vos requêtes
+        baseURL: process.env.APP_BASE_URL, // Aligné sur l'URL de base pour correspondre à vos requêtes
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
