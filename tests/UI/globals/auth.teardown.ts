@@ -5,7 +5,6 @@ const login = 'playwright/.auth/user.json';
 
 teardown('nettoyage', async ({ page }) => {
   const url = process.env.APP_BASE_URL;
-  // Navigation vers l'URL
   await page.goto(url);
   
   const logoutButton = page.getByRole('button', { name: 'Logout' });

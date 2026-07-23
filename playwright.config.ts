@@ -37,10 +37,11 @@ export default defineConfig({
       name: 'setup',
       testDir: './tests/UI',
       testMatch: /auth\.setup\.ts/,
+      teardown: 'teardown',
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
-        baseURL: process.env.APP_BASE_URL,
+       baseURL: `${process.env.APP_BASE_URL}`
       },
     },
   
@@ -52,7 +53,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome', 
-        baseURL: process.env.APP_BASE_URL,
+       baseURL: `${process.env.APP_BASE_URL}`,
       },
     },
 
@@ -63,12 +64,12 @@ export default defineConfig({
       dependencies: ['setup'], // C'est correct ici pour attendre le setup
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 3,
+      workers: 2,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        baseURL: process.env.APP_BASE_URL, 
-        storageState: STORAGE_STATE_PATH,
+       baseURL: `${process.env.APP_BASE_URL}`,
+       storageState: STORAGE_STATE_PATH,
       },
     },
 
@@ -81,7 +82,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: `${process.env.APP_BASE_URL}/api/`, // Aligné sur l'URL de base pour correspondre à vos requêtes
+        baseURL: `${process.env.APP_BASE_URL}/api/`,
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },

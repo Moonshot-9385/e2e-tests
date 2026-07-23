@@ -2,7 +2,7 @@
   "cookies": [],
   "origins": [
     {
-      "origin": "https://moonshot-dashboard-test.vercel.app",
+      "origin": "https://test.moonshot-dashboard.com",
       "localStorage": [
         {
           "name": "moonshot-session",

@@ -7,9 +7,9 @@ import process from 'process';
 const login = path.resolve('.auth/user.json'); 
 
 setup('authentification', async ({ page }) => {
-  const email = process.env.USER_EMAIL;
+  const email = `${process.env.USER_EMAIL}`;
   const password = process.env.USER_PASSWORD;
-  const url = process.env.APP_BASE_URL;
+  const url = `${process.env.APP_BASE_URL}`
   
   await page.goto(url);
 
