@@ -1,4 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "version": 2,
+  "buildCommand": "echo 'No build step required'",
+  "outputDirectory": "."
 }
