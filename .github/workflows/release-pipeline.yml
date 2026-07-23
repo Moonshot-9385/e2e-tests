@@ -1,88 +1,175 @@
 name: Moonshot Test Release & E2E
 
+
+
 on:
+
   workflow_dispatch:
+
   push:
+
     branches:
+
       - main
+
     paths-ignore:
+
       - 'README.md'
+
       - 'playwright-report/**'
+
       - 'test-results/**'
 
+
+
 jobs:
+
   deploy-test:
+
     runs-on: ubuntu-latest
+
     outputs:
+
       preview_url: ${{ steps.get-url.outputs.url }}
+
     steps:
+
       - name: Checkout code
+
         uses: actions/checkout@v4
 
+
+
       - name: Setup Node.js
+
         uses: actions/setup-node@v4
+
         with:
+
           node-version: 22
 
+
+
       - name: Install dependencies
+
         run: npm ci
+
+
 
       - name: Install Vercel CLI
+
         run: npm install --global vercel@latest
 
+
+
       - name: Deploy to Vercel (Test Environment)
+
         id: get-url
+
         working-directory: .
+
         run: |
+
           pwd
+
           ls -la
+
           
+
           # Liaison automatique du projet Vercel avec les secrets
+
           vercel link --yes --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} || true
+
           
+
           vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
+
+
           DEPLOY_OUTPUT=$(vercel deploy --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }} 2>&1)
+
           echo "$DEPLOY_OUTPUT"
+
           DEPLOY_URL=$(printf '%s\n' "$DEPLOY_OUTPUT" | grep -Eo 'https://[^[:space:]]+' | tail -n 1)
+
           echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
           echo "Deployed URL: $DEPLOY_URL"
+
         env:
+
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+
+
   run-e2e-tests:
+
     needs: deploy-test
+
     runs-on: ubuntu-latest
+
     steps:
+
       - name: Checkout code
+
         uses: actions/checkout@v4
 
+
+
       - name: Setup Node.js
+
         uses: actions/setup-node@v4
+
         with:
+
           node-version: 22
 
+
+
       - name: Install dependencies
+
         run: npm ci
 
+
+
       - name: Run API Tests against Vercel Preview
-        run: npx playwright test --project=api-tests --workers=1 --retries=1 --reporter=list,html --trace on-first-retry
+
+        run: npx playwright test tests --project=api-tests --workers=1 --retries=1 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
+
         env:
+
           APP_BASE_URL: ${{ needs.deploy-test.outputs.preview_url }}
+
           API_TOKEN: ${{ secrets.API_TOKEN }}
 
+
+
       - name: Run UI Tests against Vercel Preview
-        run: npx playwright test --project=ui-tests --workers=1 --retries=1 --reporter=list,html --trace on-first-retry
+
+        run: npx playwright test tests --project=ui-tests --workers=1 --retries=1 --timeout=12000 --reporter=list,html --trace on-first-retry --fail-on-flaky-tests
+
         env:
+
           APP_BASE_URL: ${{ needs.deploy-test.outputs.preview_url }}
+
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
+
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
 
+
+
       - name: Upload Playwright Reports
+
         uses: actions/upload-artifact@v4
+
         if: always()
+
         with:
+
           name: playwright-report-preview
+
           path: playwright-report/
+
           retention-days: 30

@@ -70,7 +70,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        baseURL: appBaseUrl, // Interface utilisateur Web
+        baseURL: appBaseUrl, 
         storageState: STORAGE_STATE_PATH,
       },
     },
@@ -84,7 +84,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'], 
         channel: 'chrome',
-        baseURL: `${appBaseUrl}/api/`, 
+        baseURL: appBaseUrl, // Aligné sur l'URL de base pour correspondre à vos requêtes
         extraHTTPHeaders: {
           'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
