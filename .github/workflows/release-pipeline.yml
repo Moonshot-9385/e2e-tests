@@ -1,9 +1,14 @@
 name: Moonshot Test Release & E2E
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+      - 'playwright-report/**'
+      - 'test-results/**'
 
 jobs:
   deploy-test:
@@ -53,10 +58,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: e2e-tests
 
       - name: Run E2E Tests
         run: npm run test
-        working-directory: e2e-tests
         env:
           VERCEL_PREVIEW_URL: ${{ needs.deploy-test.outputs.preview_url }}
