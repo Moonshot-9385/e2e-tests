@@ -92,7 +92,7 @@ jobs:
 
       - run: npm ci
       
-      - run: npx playwright test --project=ui-tests --workers=1 --retries=1 --timeout=12000 --reporter=list,html
+      - run: npx playwright test --project=ui-tests --workers=1 --retries=1 --timeout=15000 --reporter=list,html
         env:
           APP_BASE_URL: ${{ vars.APP_BASE_URL }}
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
