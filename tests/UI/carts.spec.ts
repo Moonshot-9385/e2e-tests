@@ -9,6 +9,7 @@ test.beforeEach(async({ page }) => {
 });
 
 test('modifier cart', async ({ page }) => {
+await page.getByRole('link', { name:/cart_/ }).first().click();
 await expect(page.getByText('This cart is empty.')).toBeVisible();
 await page.getByLabel('Product').selectOption('USB-C Hub');
  await page.getByRole('button', { name: 'Add item' }).click();
@@ -19,6 +20,7 @@ await page.getByLabel('Product').selectOption('USB-C Hub');
 
 
 test('abondon cart', async ({ page }) => {
+ await page.getByRole('link', { name:/cart_/ }).first().click();
  await page.getByRole('button', { name: 'Abandon cart' }).click();
 await expect(page.getByText('Cart abandoned.')).toBeVisible();
 
