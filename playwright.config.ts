@@ -64,7 +64,7 @@ export default defineConfig({
       dependencies: ['setup'], // C'est correct ici pour attendre le setup
       testMatch: /.*\.spec\.ts$/,
       testIgnore: [/auth\.setup\.ts/, /auth\.teardown\.ts/],
-      workers: 2,
+      workers: 1,
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
