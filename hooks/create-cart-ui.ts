@@ -7,6 +7,6 @@ export async function createCartUI(page){
   await page.getByRole('button', { name: 'Create cart' }).click();
   await page.getByRole('link', { name: /cart_/ }).first().click();
   await page.getByRole('button', { name: 'Create cart' }).click();
-  await page.getByRole('link', { name:/cart_/ }).first().click();
+ // await page.getByRole('link', { name:/cart_/ }).first().click();
 
 };
