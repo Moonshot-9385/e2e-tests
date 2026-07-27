@@ -90,7 +90,7 @@ jobs:
 
       - name: Wait for Vercel Production Deployment to complete
         run: |
-          echo "Waiting 15s for Vercel to register the new build..."
+          echo "Waiting 30s for Vercel to register the new build..."
           sleep 30
           
           for i in {1..30}; do
@@ -113,3 +113,27 @@ jobs:
           
           echo "Error: Deployment timed out after 5 minutes."
           exit 1
+
+  smoke-tests-prod:
+    needs: deploy-prod
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      
+      - name: Run Production Smoke Test
+        run: npx playwright test E2E-tests/tests/API/customers.spec.ts --project=api-tests --grep "@smoke" --workers=1 --retries=1 --reporter=list,html
+        env:
+          APP_BASE_URL: ${{ vars.APP_BASE_URL }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+          
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-smoke-prod
+          path: playwright-report/
+          retention-days: 30

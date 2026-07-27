@@ -24,8 +24,7 @@ test('get 1 customer', async ({ request }) => {
 });
 
 
-
-test('get all customer', async ({ request }) => {
+test('get all customer', { tag: '@smoke' }, async ({ request }) => {
   const getRequest = await request.get('customers');
   expect(getRequest.status()).toBe(200);
   expect(getRequest.ok()).toBeTruthy();
