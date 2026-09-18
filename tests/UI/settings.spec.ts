@@ -1,14 +1,10 @@
 
 import { test, expect } from '@playwright/test';
+import{SetPage}from './Setting-page'
 
 test.describe.configure({ mode: 'serial' });
 
 test('change currency', async ({ page }) => {
-  await page.goto('/settings');
-  //await expect(page.getByTestId('sidebar-settings')).toBeVisible();
-    await page.getByLabel('Store name').fill('Moonshot');
-  await page.getByLabel('Currency').selectOption('EUR');
-
-   await page.getByRole('button', { name: 'Save settings' }).click();
-  await expect(page.getByText('Settings saved.')).toBeVisible();
+  const Setpage = new SetPage(page)
+await Setpage.change();
 });

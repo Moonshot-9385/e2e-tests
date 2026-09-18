@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { createProductUI } from '../../hooks/create-product-ui';
+import{ productsPage } from './products-page';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -9,17 +10,14 @@ test.beforeEach(async ({ page }) => {
 
 
 test('modifier product', async ({ page }) => {
-await page.getByLabel('Name').fill('Mac13Pro');
-await page.getByLabel('Price').fill('1400');
-await page.getByRole('button', { name: 'Save changes' }).click();
-await expect(page.getByRole('heading', { name: 'Mac13Pro' })).toBeVisible();
-await expect(page.getByLabel('Price')).toHaveValue('1400');
-
+  const productspage = new productsPage(page);
+  await productspage.modifyProduct('Mac13Pro', '1400', 'Inactive');
+  await expect(productspage.productName).toHaveText('Mac13Pro');
+  await expect(productspage.ProductPrice).toHaveValue('1400');
 });
 
 
 test('delete product', async ({ page }) => {
-await expect(page.getByRole('button', { name: 'Delete product' })).toBeEnabled();
-  await page.getByRole('button', { name: 'Delete product' }).click();
-  await expect(page.getByText('Mac13')).not.toBeVisible(); 
+const productspage = new productsPage(page);
+await productspage.deleteProduct(); 
 });

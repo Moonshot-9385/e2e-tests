@@ -1,14 +1,11 @@
-
-import{expect}from'@playwright/test'
-export async function createOrderUI(page){
-  await page.goto('/carts');
-  await expect(page.getByTestId('sidebar-carts')).toBeVisible();
-  await page.getByLabel('Status').selectOption('All statuses');
-  await page.getByLabel('Customer').selectOption('Jordan Lee');
-  await page.getByRole('button', { name: 'Create cart' }).click();
-await page.getByRole('link', { name: /cart_/ }).first().click();
- await expect(page.getByText('Loading cart customer...')).toBeVisible();
- await page.getByRole('button', { name: 'Add item' }).click();
- await expect(page.getByText('Item added.')).toBeVisible();
-
-};
+//it works
+import{expect , Page}from'@playwright/test'
+import { ordersPage } from '../tests/UI/orders-page.ts';
+export async function createOrderUI(page:Page){
+const orderspage = new ordersPage(page);
+await orderspage.createOrder('All statuses','abc abc');
+await orderspage.productSelect.selectOption('xyz'); 
+ await orderspage.addItemButton.click();
+ await expect(orderspage.addingItemMessage).toBeVisible();
+await orderspage.checkoutButton.click();
+}

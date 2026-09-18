@@ -1,7 +1,7 @@
 
 import { test, expect } from '@playwright/test';
 import { createCartUI } from '../../hooks/create-cart-ui';
-
+import { CartsPage } from './carts-page';
 test.describe.configure({ mode: 'parallel' });
 
 test.beforeEach(async({ page }) => {
@@ -9,21 +9,24 @@ test.beforeEach(async({ page }) => {
 });
 
 test('modifier cart', async ({ page }) => {
-await page.getByRole('link', { name:/cart_/ }).first().click();
-await expect(page.getByText('This cart is empty.')).toBeVisible();
-await page.getByLabel('Product').selectOption('USB-C Hub');
- await page.getByRole('button', { name: 'Add item' }).click();
- await page.getByRole('button', { name: 'Checkout cart' }).click();
- 
-//await expect(page.getByText('USB-C Hub')).toBeVisible();
+  const cartsPage = new CartsPage(page);
+  await cartsPage.modifyCart('Open', 'lionel messi');
+  await cartsPage.productSelect.selectOption('Mac13');
+  await cartsPage.addItemButton.click();
+  await cartsPage.checkoutCartButton.click();
+  await expect(cartsPage.itemAddedMessage).toBeVisible();
 });
 
 
 
-test('abondon cart', async ({ page }) => {
- await page.getByRole('link', { name:/cart_/ }).first().click();
- await page.getByRole('button', { name: 'Abandon cart' }).click();
-await expect(page.getByText('Cart abandoned.')).toBeVisible();
+test('abandon cart', async ({ page }) => {
+const cartsPage = new CartsPage(page);
+await cartsPage.deleteCart();
 
 });
+
+
+
+
+
 
